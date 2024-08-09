@@ -46,6 +46,7 @@ function sum(numbers) {
 ////////////////////////////////////////////////////////////////////////////////
 
 function reverseArray(array) {
+  //create new arraywithe elements reversed
   const reversed = [];
     for (let i = array.length - 1; i >= 0; i--) {
         reversed.push(array[i]);
