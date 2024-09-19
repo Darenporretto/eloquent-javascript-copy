@@ -26,10 +26,15 @@ LOGS =>
 
 */
 
-function triangles() {
-  
+function triangles(size) {
+  //accepts a number and logs a triangle shape with that many triangles
+  if (size <= 0) return; //handles not positive numbers
+  for (let i = 1; i <= size; i++) {
+    //uses a loop to llg each level with the correct number of pound signs
+      console.log('#'.repeat(i)); //logs pound sign repeated i times
+  }
 }
-
+triangles(7);
 
 ////////////////////////////////////////////////////////////////////////////////
 // fizzBuzz ////////////////////////////////////////////////////////////////////
@@ -48,8 +53,21 @@ on the number:
 */
 
 function fizzBuzz(start, end) {
-  
+  //loop through all numbers from 'start' through 'end'
+  for (let i = start; i <= end; i++) {
+    if (i % 15 === 0) {
+        console.log('fizzbuzz');//divisible by both 3 and 5
+    } else if (i % 3 === 0) {
+        console.log('fizz');//diviible by only 3
+    } else if (i % 5 === 0) {
+        console.log('buzz');//divisible by only 5
+    } else {
+        console.log(i); 
+      //uses conditions to log fizz and buzz or fizzbuzz based on if divisvle by
+    }
 }
+}
+fizzBuzz(1, 15);
 
 ////////////////////////////////////////////////////////////////////////////////
 // drawChessboard //////////////////////////////////////////////////////////////
@@ -82,10 +100,24 @@ LOGS =>
 */
 
 function drawChessboard(x) {
+  let board = ''; //initialize empty string for the chessboard
+    for (let row = 0; row < x; row++) { //row for each row
+        for (let col = 0; col < x; col++) { //col for each column
+            //determine whether to place a space or a pound sign
+            if ((row + col) % 2 === 0) {
+                board += ' '; //add space for evens
+            } else {
+                board += '#'; //add pound sign for odds
+            }
+        }
+        board += '\n'; //add newline character after each row
+    }
 
-
+    console.log(board); //log the board
+  
 }
 
+drawChessboard(8);
 ////////////////////////////////////////////////////////////////////////////////
 // DON'T REMOVE THIS CODE //////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
