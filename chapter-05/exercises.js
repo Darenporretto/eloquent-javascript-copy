@@ -2,15 +2,22 @@
 // flatten /////////////////////////////////////////////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////
 
-function flatten() {
-
+function flatten(arrays) {
+  return arrays.reduce((flat, current) => flat.concat(current), []);
+  //use reduce to iterate bthrough sub array
+  //flatten with concat
 }
 
 // /////////////////////////////////////////////////////////////////////////////
 // loop ////////////////////////////////////////////////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////
 
-function loop() {
+function loop(start, test, update, body) {
+  let value = start;
+  while (test(value)) {
+    body(value);
+    value = update(value);
+  }
 
 }
 
@@ -18,7 +25,13 @@ function loop() {
 // every ///////////////////////////////////////////////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////
 
-function every() {
+function every(array, test) {
+  for (let i = 0; i < array.length; i++) {
+    if (!test(array[i])) {
+      return false; //return false if any element fails this test
+    }
+  }
+  return true; //if all elements pass
 
 }
 
@@ -26,7 +39,28 @@ function every() {
 // dominantDirection ///////////////////////////////////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////
 
-function dominantDirection() {
+function dominantDirection(text) {
+  const rtlChars = [...text].filter(char => {
+    const code = char.codePointAt(0);
+    return (
+        (code >= 0x0590 && code <= 0x05FF) || //hebrew
+        (code >= 0x0600 && code <= 0x06FF) || //arabic
+        (code >= 0x0750 && code <= 0x077F) || //arabic supplement
+        (code >= 0x0800 && code <= 0x083F) || //samaritan
+        (code >= 0x0840 && code <= 0x085F)    //arabic extended
+    );
+}).length;
+
+const ltrChars = [...text].filter(char => {
+    const code = char.codePointAt(0);
+    return (
+        (code >= 0x0041 && code <= 0x005A) || //A-Z
+        (code >= 0x0061 && code <= 0x007A) || //a-z
+        (code >= 0x00C0 && code <= 0x00FF)    //latin extended
+    );
+}).length;
+
+return rtlChars > ltrChars ? 'rtl' : 'ltr';
 
 }
 
