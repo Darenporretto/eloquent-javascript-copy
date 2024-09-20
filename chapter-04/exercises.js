@@ -2,15 +2,36 @@
 // range ///////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-function range() {
+function range(start, end, step = 1) {
+  //return empy array if start and the end are the same
+  if (start === end){
+    return [];
+  }
 
+  const result = [];
+
+  //if step positive
+  if (step > 0) {
+    for (let i = start; i <= end; i += step) {
+      result.push(i);
+    }
+  }
+  //if step negative
+  else if (step < 0) {
+    for (let i = start; i >= end; i += step) {
+      result.push(i);
+    }
+  }
+  return result; // returns thr resulting array
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // sum /////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-function sum() {
+function sum(array) {
+  //calculaulate total in array using reduce
+  return array.reduce((accumulator, current) => accumulator + current, 0);
 
 }
 
@@ -18,23 +39,45 @@ function sum() {
 // reverseArray ////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-function reverseArray() {
-
+function reverseArray(array) {
+  const reversed = []; //initialize enpty array
+  for (let i = array.length - 1; i >= 0; i--) {
+    reversed.push(array[i]); //push elements in reverse
+  }
+  return reversed; //returns new array that is reversed
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // reverseArrayInPlace /////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-function reverseArrayInPlace() {
+function reverseArrayInPlace(array) {
+  let left = 0; //befin pointer
+  let right = array.length -1; //end pointer
 
+  while (left < right) {
+    //switch L and R pointers
+    [array[left], array[right]] = [array[right], array[left]];
+    left++; //move left to right
+    right--; //right to left
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // arrayToList /////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-function arrayToList() {
+function arrayToList(array) {
+  //base case if the array is empty return as null
+  if (array.length === 0) {
+    return null;
+  }
+  //make the list for first elementand set rest recursively
+  return {
+    value: array[0],
+    rest: arrayToList(array.slice(1)) //recursively converts the remaining array
+
+  };
 
 }
 
@@ -42,7 +85,16 @@ function arrayToList() {
 // listToArray /////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-function listToArray() {
+function listToArray(list) {
+  const array = []; //initialize empty array
+  let current = list; //start at given list
+
+  while (current) {
+    array.push(current.value); //push current value to array
+    current = current.rest; //move to next ellement in list
+  }
+
+  return array; //return constructed array
 
 }
 
@@ -50,7 +102,11 @@ function listToArray() {
 // prepend /////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-function prepend() {
+function prepend(value, list) {
+  return{
+    value: value, //new value
+    rest: list //link to list
+  };
 
 }
 
@@ -58,16 +114,49 @@ function prepend() {
 // nth /////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-function nth() {
-
+function nth(list, n) {
+  //base case: if liost is null or n is negative return undefinred
+  if (list === null || n < 0) {
+    return undefined;
+  }
+  //if n is zero return value at current node
+  if (n === 0) {
+    return list.value;
+  }
+  //reursively call nth on the rest of list with n
+  return nth(list.rest, n -1);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // deepEqual ///////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-function deepEqual() {
+function deepEqual(a, b) {
+  //check if both values are same reference or both strictly equal
+  if (a === b) return true;
 
+  //check for null or undefined
+  if (a == null || b == null) return false;
+
+  //check if both are objects not primitives
+  if (typeof a !== 'object' || typeof b !== 'object') return false;
+
+  //get keys of both objects
+  const keysA = Object.keys(a);
+  const keysB = Object.keys(b);
+
+  //check the number of keys is the same
+  if (keysA.length !== keysB.length) return false;
+
+  //check each key recursively
+  for (let key of keysA) {
+      //check if key exists in both objects and if their values are deeply equal
+      if (!keysB.includes(key) || !deepEqual(a[key], b[key])) {
+          return false;
+      }
+  }
+
+  return true; 
 }
 
 ////////////////////////////////////////////////////////////////////////////////
